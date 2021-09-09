@@ -2,11 +2,17 @@ package main
 
 import (
 	"encoding/csv"
+	"flag"
 	"fmt"
 	"os"
 )
 
 func main() {
+	findCol := flag.Int("find", 0, "CSV column to search from")
+	rawCol := flag.Int("raw", 0, "CSV column to search in")
+
+	flag.Parse()
+
 	fmt.Println("finder")
 
 	find, err := os.Open("find.csv")
@@ -34,11 +40,11 @@ func main() {
 	oMap := make(map[string]bool)
 
 	for _, v := range f {
-		fMap[v[0]] = true
+		fMap[v[*findCol]] = true
 	}
 
 	for _, v := range o {
-		oMap[v[0]] = true
+		oMap[v[*rawCol]] = true
 	}
 
 	for i := range fMap {
